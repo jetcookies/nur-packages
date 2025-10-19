@@ -16,6 +16,7 @@
 
   example-package = pkgs.callPackage ./pkgs/example-package { };
   dectalk = pkgs.callPackage ./pkgs/dectalk { };
+  x4-xmldiff = pkgs.callPackage ./pkgs/x4-xmldiff { };
   # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
   # ...
 }
