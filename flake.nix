@@ -10,5 +10,9 @@
         pkgs = import nixpkgs { inherit system; };
       });
       packages = forAllSystems (system: nixpkgs.lib.filterAttrs (_: v: nixpkgs.lib.isDerivation v) self.legacyPackages.${system});
+
+      nixosModules = {
+        subconverter = import ./modules/services/networking/subconverter.nix;
+      };
     };
 }
