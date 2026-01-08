@@ -18,6 +18,7 @@
   dectalk = pkgs.callPackage ./pkgs/dectalk { };
   x4-xmldiff = pkgs.callPackage ./pkgs/x4-xmldiff { };
   rime-lmdg = pkgs.callPackage ./pkgs/rime-lmdg { };
+  v2dat = pkgs.callPackage ./pkgs/v2dat { };
   # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
   # ...
 }
