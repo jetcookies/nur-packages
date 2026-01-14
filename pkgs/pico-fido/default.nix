@@ -12,12 +12,14 @@
 
   # Options
   # https://github.com/polhenarejos/pico-fido#build-for-raspberry-pico
-  picoboard ? "pico",
+  picoBoard ? "pico",
   vidpid ? null,
-  usbvid ? null,
-  usbpid ? null,
+  usbVID ? null,
+  usbPID ? null,
+  secureBootPKey ? null,
 }:
-assert lib.assertMsg (!(vidpid != null && (usbvid != null || usbpid != null))) "pico-fido: arguments 'vidpid' and 'usbvid/usbpid' are mutually exclusive.";
+assert lib.assertMsg (!(vidpid != null && (usbVID != null || usbPID != null))) "pico-fido: arguments 'vidpid' and 'usbVID/usbPID' are mutually exclusive.";
+assert lib.assertMsg ((secureBootPKey != null) -> (lib.isPath secureBootPKey)) "pico-fido: argument 'secureBootPKey' must be a valid file path, but got: '${toString secureBootPKey}'.";
 stdenvNoCC.mkDerivation (finalAttrs: {
 
   pname = "pico-fido";
@@ -46,15 +48,16 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     "-DCMAKE_C_COMPILER=${lib.getExe' gcc-arm-embedded "arm-none-eabi-gcc"}"
     "-DCMAKE_CXX_COMPILER=${lib.getExe' gcc-arm-embedded "arm-none-eabi-g++"}"
   ]
-  ++ lib.optionals (picoboard != null) [ "-DPICO_BOARD=${picoboard}" ]
-  ++ lib.optionals (vidpid != null) [ "-DVIDPID=${vidpid}" ]
-  ++ lib.optionals (usbvid != null && usbpid != null) [ "-DUSB_VID=${usbvid}" "-DUSB_PID=${usbpid}" ];
+  ++ lib.optionals (picoBoard != null) [ "-DPICO_BOARD=${picoBoard}" ]
+  ++ lib.optionals (vidpid != null) [ "-Dvidpid=${vidpid}" ]
+  ++ lib.optionals (usbVID != null && usbPID != null) [ "-DUSB_VID=${usbVID}" "-DUSB_PID=${usbPID}" ]
+  ++ lib.optionals (secureBootPKey != null) [ "-DSECURE_BOOT_PKEY=${secureBootPKey}" ];
 
   installPhase = ''
     runHook preInstall
 
     mkdir -p $out/share/pico-fido
-    install pico_fido.uf2 $out/share/pico-fido/pico_fido_${picoboard}-${finalAttrs.version}.uf2
+    install pico_fido.uf2 $out/share/pico-fido/pico_fido_${picoBoard}-${finalAttrs.version}.uf2
 
     runHook postInstall
   '';
