@@ -19,6 +19,7 @@
   x4-xmldiff = pkgs.callPackage ./pkgs/x4-xmldiff { };
   rime-lmdg = pkgs.callPackage ./pkgs/rime-lmdg { };
   v2dat = pkgs.callPackage ./pkgs/v2dat { };
+  pico-fido = pkgs.callPackage ./pkgs/pico-fido { };
   # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
   # ...
 }
