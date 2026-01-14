@@ -17,9 +17,11 @@
   usbVID ? null,
   usbPID ? null,
   secureBootPKey ? null,
+  extraCmakeFlags ? null,
 }:
-assert lib.assertMsg (!(vidpid != null && (usbVID != null || usbPID != null))) "pico-fido: arguments 'vidpid' and 'usbVID/usbPID' are mutually exclusive.";
-assert lib.assertMsg ((secureBootPKey != null) -> (lib.isPath secureBootPKey)) "pico-fido: argument 'secureBootPKey' must be a valid file path, but got: '${toString secureBootPKey}'.";
+assert lib.assertMsg (!(vidpid != null && (usbVID != null || usbPID != null))) "pico-fido: Arguments 'vidpid' and 'usbVID/usbPID' could not be set at the same time.";
+assert lib.assertMsg ((secureBootPKey != null) -> (lib.isPath secureBootPKey)) "pico-fido: Argument 'secureBootPKey' must be a valid file path, but got: '${toString secureBootPKey}'.";
+assert lib.assertMsg ((extraCmakeFlags != null) -> (lib.isList extraCmakeFlags)) "pico-fido: Argument 'extraCmakeFlags' must be a list, but got: '${toString extraCmakeFlags}'.";
 stdenvNoCC.mkDerivation (finalAttrs: {
 
   pname = "pico-fido";
@@ -51,7 +53,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   ++ lib.optionals (picoBoard != null) [ "-DPICO_BOARD=${picoBoard}" ]
   ++ lib.optionals (vidpid != null) [ "-DVIDPID=${vidpid}" ]
   ++ lib.optionals (usbVID != null && usbPID != null) [ "-DUSB_VID=${usbVID}" "-DUSB_PID=${usbPID}" ]
-  ++ lib.optionals (secureBootPKey != null) [ "-DSECURE_BOOT_PKEY=${secureBootPKey}" ];
+  ++ lib.optionals (secureBootPKey != null) [ "-DSECURE_BOOT_PKEY=${secureBootPKey}" ]
+  ++ lib.optionals (extraCmakeFlags != null) extraCmakeFlags;
 
   installPhase = ''
     runHook preInstall
