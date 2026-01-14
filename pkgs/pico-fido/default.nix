@@ -49,7 +49,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     "-DCMAKE_CXX_COMPILER=${lib.getExe' gcc-arm-embedded "arm-none-eabi-g++"}"
   ]
   ++ lib.optionals (picoBoard != null) [ "-DPICO_BOARD=${picoBoard}" ]
-  ++ lib.optionals (vidpid != null) [ "-Dvidpid=${vidpid}" ]
+  ++ lib.optionals (vidpid != null) [ "-DVIDPID=${vidpid}" ]
   ++ lib.optionals (usbVID != null && usbPID != null) [ "-DUSB_VID=${usbVID}" "-DUSB_PID=${usbPID}" ]
   ++ lib.optionals (secureBootPKey != null) [ "-DSECURE_BOOT_PKEY=${secureBootPKey}" ];
 
