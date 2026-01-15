@@ -60,7 +60,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     runHook preInstall
 
     mkdir -p $out/share/pico-fido
-    install pico_fido.uf2 $out/share/pico-fido/pico_fido_${picoBoard}-${finalAttrs.version}.uf2
+    install pico_fido.uf2 $out/share/pico-fido/pico-fido-${picoBoard}-${if (vidpid != null) then vidpid else "none"}.uf2
 
     runHook postInstall
   '';
