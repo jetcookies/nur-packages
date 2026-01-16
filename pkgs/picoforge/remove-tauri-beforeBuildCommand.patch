@@ -1,0 +1,12 @@
+diff --git a/src-tauri/tauri.conf.json b/src-tauri/tauri.conf.json
+index c9fab2a..3e9ed84 100644
+--- a/src-tauri/tauri.conf.json
++++ b/src-tauri/tauri.conf.json
+@@ -6,7 +6,6 @@
+   "build": {
+     "beforeDevCommand": "deno task dev",
+     "devUrl": "http://localhost:1420",
+-    "beforeBuildCommand": "deno task build",
+     "frontendDist": "../build"
+   },
+   "app": {

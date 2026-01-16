@@ -20,6 +20,7 @@
   rime-lmdg = pkgs.callPackage ./pkgs/rime-lmdg { };
   v2dat = pkgs.callPackage ./pkgs/v2dat { };
   pico-fido = pkgs.callPackage ./pkgs/pico-fido { };
+  picoforge = pkgs.callPackage ./pkgs/picoforge { };
   # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
   # ...
 }
