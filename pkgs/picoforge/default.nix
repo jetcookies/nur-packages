@@ -22,28 +22,26 @@
 rustPlatform.buildRustPackage (finalAttrs: {
 
   pname = "picoforge";
-  version = "0.2.0";
+  version = "0.2.1";
 
   src = fetchFromGitHub {
     owner = "librekeys";
     repo = "picoforge";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-xc25LnDoIRwCT9QrTEAOiy0H7iVAL8DNCbLo2yhRwfQ=";
+    hash = "sha256-bVD8CXDDiXBPDCdspk9b4Y9hSfRDH4nHGF0IIZIMb9M=";
   };
 
   cargoRoot = "src-tauri";
 
   buildAndTestSubdir = finalAttrs.cargoRoot;
 
-  cargoHash = "sha256-+2TKSA0otct5KYiSy5hP0ZH8WlhM/Wr8ibwMVE5pcpo=";
+  cargoHash = "sha256-nLf8v4MIt2zAeA9YMVaoI3s/yut5/Jy2fGM3Sx33EJc=";
 
   npmDist = buildNpmPackage {
     name = "${finalAttrs.pname}-${finalAttrs.version}-dist";
     inherit (finalAttrs) src;
 
-    patches = [ ./add-package-lock.patch ];
-
-    npmDepsHash = "sha256-Jzsfpbo0/+iqnOlknlZi/SKbN6zQjrYByGCtabvRCKs=";
+    npmDepsHash = "sha256-7DLooiGLzk3JRsKAftOxSf7HAgHBXCJDaAFp2p/pryc=";
 
     installPhase = ''
       runHook preInstall
@@ -55,9 +53,8 @@ rustPlatform.buildRustPackage (finalAttrs: {
     '';
   };
 
-  patches = [ ./remove-tauri-beforeBuildCommand.patch ];
-
-  postPatch = ''
+  preBuild = ''
+    sed -i '/beforeBuildCommand/d' src-tauri/tauri.conf.json
     cp -r ${finalAttrs.npmDist} build
   '';
 
@@ -80,18 +77,21 @@ rustPlatform.buildRustPackage (finalAttrs: {
   ];
 
   postInstall = ''
-    install -Dm644 ${finalAttrs.src}/static/pico-forge.svg $out/share/icons/hicolor/scalable/apps/picoforge.svg
+    install -Dm644 ${finalAttrs.src}/static/in.suyogtandel.picoforge.svg $out/share/icons/hicolor/scalable/apps/picoforge.svg
   '';
 
   desktopItems = [
     (makeDesktopItem {
-      name = "picoforge";
+      name = "in.suyogtandel.picoforge";
       desktopName = "PicoForge";
       exec = "picoforge";
       terminal = false;
       icon = "picoforge";
       comment = finalAttrs.meta.description;
       categories = [ "Utility" ];
+      dbusActivatable = true;
+      keywords = [ "Config" ];
+      startupNotify = true;
     })
   ];
 
