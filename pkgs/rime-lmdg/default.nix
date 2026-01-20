@@ -6,11 +6,11 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "rime-lmdg";
-  version = "LTS-20251228+sha256.5a721d3";
+  version = "0-unstable-2026-01-17";
 
   src = fetchurl {
     url = "https://github.com/jetcookies/RIME-LMDG-tracker/releases/download/${finalAttrs.version}/wanxiang-lts-zh-hans.gram";
-    hash = "sha256-WnIdOzF9FYyzVs+waD+DHKvAaAI8EQTIYwMD4I9jhVE=";
+    hash = "sha256-VG1acUBvnX3km9iAIEup1Zrt/JPvhQ3vGbIDuJ4ZyRo=";
   };
 
   dontUnpack = true;
