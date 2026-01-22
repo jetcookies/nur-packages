@@ -19,4 +19,13 @@
         };
       };
     };
+
+  nixConfig = {
+    extra-substituters = [
+      "https://jetcookies.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "jetcookies.cachix.org-1:YM4ERAadhoioRkDA5ZKgnKN98N5x0ubV8t6HeIekcnc="
+    ];
+  };
 }
