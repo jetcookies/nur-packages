@@ -2,11 +2,12 @@
   lib,
   fetchFromGitHub,
   buildGoModule,
+  nix-update-script,
 }:
- buildGoModule(finalAttrs: {
+buildGoModule (finalAttrs: {
 
   pname = "v2dat";
-  version = "r2.47b8ee5";
+  version = "0-unstable-2022-12-15";
 
   src = fetchFromGitHub {
     owner = "urlesistiana";
@@ -17,8 +18,10 @@
 
   vendorHash = "sha256-ndWasQUHt35D528PyGan6JGXh5TthpOhyJI2xBDn0zI=";
 
+  passthru.updateScript = nix-update-script { extraArgs = [ "--version=branch" ]; };
+
   meta = {
-    description = "A cli tool that can unpack v2ray data packages (also known as geoip.dat and geosite.dat) to text files.";
+    description = "A cli tool that can unpack v2ray data packages (also known as geoip.dat and geosite.dat) to text files";
     homepage = "https://github.com/urlesistiana/v2dat";
     license = lib.licenses.gpl3Only;
     mainProgram = "v2dat";
