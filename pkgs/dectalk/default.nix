@@ -1,14 +1,13 @@
 {
   lib,
   stdenvNoCC,
-  fetchgit,
+  fetchFromGitHub,
   makeDesktopItem,
 
   autoreconfHook,
   pkg-config,
   gcc13,
-  unzip,
-  git,
+  copyDesktopItems,
 
   alsa-lib,
   libpulseaudio,
@@ -17,29 +16,35 @@
 stdenvNoCC.mkDerivation (finalAttrs: {
 
   pname = "dectalk";
-  version = "2023-10-30";
+  version = "0-unstable-2023-10-30";
 
-  src = fetchgit {
-    url = "https://github.com/dectalk/dectalk.git";
-    tag = "${finalAttrs.version}";
-    leaveDotGit = true;
-    hash = "sha256-QM1tdDFxX9AaxJ0AB/oZWQqjQ0FIacdX8EqOmwlLihw=";
+  src = fetchFromGitHub {
+    owner = "dectalk";
+    repo = "dectalk";
+    rev = lib.removePrefix "0-unstable-" finalAttrs.version;
+    hash = "sha256-lpXiub6kE49t9kWG0tBqjG4uqWtG/m1/K9L2VjOA2Vk=";
   };
+
+  sourceRoot = "${finalAttrs.src.name}/src";
 
   patches = [
     ./fix-bin.patch
     ./fix-fhs.patch
   ];
 
+  patchFlags = [ "-p1" "-d" ".." ];
+
+  postPatch = ''
+    sed -i configure.ac -e '/m4_esyscmd_s/c\\t${finalAttrs.version},'
+  '';
 
   strictDeps = true;
 
   nativeBuildInputs = [
     autoreconfHook
     pkg-config
-    gcc13 # https://github.com/dectalk/dectalk/commit/e7e967e3a8cbba7cf913a955e4dbcf55bf092aed
-    unzip
-    git
+    gcc13 # https://github.com/dectalk/dectalk/issues/58
+    copyDesktopItems
   ];
 
   buildInputs = [
@@ -47,10 +52,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     libpulseaudio
     gtk2
   ];
-
-  preAutoreconf = ''
-    cd src
-  '';
 
   buildPhase = ''
     make -j release
@@ -72,7 +73,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     (makeDesktopItem {
       name = "gspeak";
       desktopName = "GSpeak";
-      exec = "gspeak %U";
+      exec = "gspeak";
       terminal = false;
       icon = "pau16a";
       comment = "Speaking Text Editor";
@@ -81,7 +82,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     (makeDesktopItem {
       name = "windic";
       desktopName = "Windic";
-      exec = "windic %U";
+      exec = "windic";
       terminal = false;
       icon = "dtk";
       comment = "Windowed Dictionary Complier";
@@ -90,8 +91,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   ];
 
   meta = {
-    changelog = "https://github.com/dectalk/dectalk/releases/tag/${finalAttrs.version}";
-    description = "Modern builds for the 90s/00s DECtalk text-to-speech application.";
+    changelog = "https://github.com/dectalk/dectalk/releases/tag/${lib.removePrefix "0-unstable-" finalAttrs.version}";
+    description = "Modern builds for the 90s/00s DECtalk text-to-speech application";
     homepage = "https://github.com/dectalk/dectalk";
     license = lib.licenses.unfree;
     mainProgram = "gspeak";
