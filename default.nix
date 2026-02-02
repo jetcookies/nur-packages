@@ -14,7 +14,6 @@
   modules = import ./modules; # NixOS modules
   overlays = import ./overlays; # nixpkgs overlays
 
-  example-package = pkgs.callPackage ./pkgs/example-package { };
   dectalk = pkgs.callPackage ./pkgs/dectalk { };
   x4-xmldiff = pkgs.callPackage ./pkgs/x4-xmldiff { };
   rime-lmdg = pkgs.callPackage ./pkgs/rime-lmdg { };
