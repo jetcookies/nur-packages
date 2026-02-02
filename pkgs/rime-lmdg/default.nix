@@ -35,7 +35,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     homepage = "https://github.com/amzxyz/RIME-LMDG";
     downloadPage = "https://github.com/amzxyz/RIME-LMDG/releases/tag/LTS";
     license = lib.licenses.cc-by-40;
-    sourceProvenance = lib.sourceTypes.binaryBytecode;
+    sourceProvenance = with lib.sourceTypes; [ binaryBytecode ];
     platforms = lib.platforms.all;
   };
 })
