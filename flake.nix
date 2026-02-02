@@ -6,7 +6,14 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = inputs@{ flake-parts, ... }:
+  outputs = inputs@{ self, flake-parts, ... }:
+    let
+      overlay = final: prev: {
+        nur-jetcookies = import ./default.nix {
+          pkgs = prev;
+        };
+      };
+    in
     flake-parts.lib.mkFlake { inherit inputs; } (
       { lib, ... }:
       {
@@ -16,6 +23,9 @@
           packages = lib.filterAttrs (_: lib.isDerivation) legacyPackages;
         };
         flake = {
+          overlays = {
+            default = overlay;
+          };
           nixosModules = {
             subconverter = import ./modules/services/networking/subconverter.nix;
           };
