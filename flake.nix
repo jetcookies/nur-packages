@@ -10,7 +10,7 @@
     flake-parts.lib.mkFlake { inherit inputs; } (
       { lib, ... }:
       {
-        systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
+        systems = [ "x86_64-linux" ];
         perSystem = { config, self', inputs', pkgs, system, ... }: rec {
           legacyPackages = import ./default.nix { inherit pkgs; };
           packages = lib.filterAttrs (_: lib.isDerivation) legacyPackages;
