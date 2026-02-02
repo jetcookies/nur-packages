@@ -26,9 +26,15 @@
 
   meta = {
     changelog = "https://github.com/chemodun/X4-XMLDiffAndPatch/releases/tag/v${finalAttrs.version}";
-    description = "This toolset is a simple XML diff and patch tools for X4: Foundations. It is designed to help modders to compare and patch XML files. The format of diff XML files is compatible with the appropriate `diff.xsd` format definition.";
+    description = "Simple XML diff and patch tools for X4: Foundations";
     homepage = "https://github.com/chemodun/X4-XMLDiffAndPatch";
     license = lib.licenses.mit;
     mainProgram = "XMLDiff";
+    platforms = [
+      "x86_64-linux"
+      "aarch64-linux"
+      "x86_64-darwin"
+      "aarch64-darwin"
+    ];
   };
 })

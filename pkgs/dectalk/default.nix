@@ -96,5 +96,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     homepage = "https://github.com/dectalk/dectalk";
     license = lib.licenses.unfree;
     mainProgram = "gspeak";
+    platforms = [ "x86_64-linux" ];
   };
 })

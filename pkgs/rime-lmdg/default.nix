@@ -31,10 +31,11 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   };
 
   meta = {
-    description = "LMDG - Language, Model, Dictionary, Grammar";
+    description = "Language, Model, Dictionary, Grammar";
     homepage = "https://github.com/amzxyz/RIME-LMDG";
     downloadPage = "https://github.com/amzxyz/RIME-LMDG/releases/tag/LTS";
     license = lib.licenses.cc-by-40;
+    sourceProvenance = lib.sourceTypes.binaryBytecode;
     platforms = lib.platforms.all;
   };
 })

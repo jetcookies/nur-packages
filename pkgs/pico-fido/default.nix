@@ -70,5 +70,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     description = "FIDO Passkey for Raspberry Pico and ESP32";
     homepage = "https://github.com/polhenarejos/pico-fido";
     license = lib.licenses.agpl3Only;
+    platforms = pico-sdk.meta.platforms;
   };
 })

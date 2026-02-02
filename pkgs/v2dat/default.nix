@@ -21,9 +21,10 @@ buildGoModule (finalAttrs: {
   passthru.updateScript = nix-update-script { extraArgs = [ "--version=branch" ]; };
 
   meta = {
-    description = "A cli tool that can unpack v2ray data packages (also known as geoip.dat and geosite.dat) to text files";
+    description = "Cli tool that can unpack v2ray data packages (also known as geoip.dat and geosite.dat) to text files";
     homepage = "https://github.com/urlesistiana/v2dat";
     license = lib.licenses.gpl3Only;
     mainProgram = "v2dat";
+    platforms = lib.platforms.linux ++ lib.platforms.darwin;
   };
 })

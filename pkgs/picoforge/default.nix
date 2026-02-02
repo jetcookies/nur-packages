@@ -95,9 +95,10 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   meta = {
     changelog = "https://github.com/librekeys/picoforge/releases/tag/v${finalAttrs.version}";
-    description = "An open source commissioning tool for Pico FIDO security keys";
+    description = "Open source commissioning tool for Pico FIDO security keys";
     homepage = "https://github.com/librekeys/picoforge";
     license = lib.licenses.agpl3Only;
     mainProgram = "picoforge";
+    platforms = lib.platforms.linux;
   };
 })
