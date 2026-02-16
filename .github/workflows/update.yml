@@ -10,8 +10,6 @@ jobs:
   update:
     strategy:
       matrix:
-        cachixName:
-          - jetcookies
         nixPath:
           - nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-unstable.tar.gz
     runs-on: ubuntu-latest
