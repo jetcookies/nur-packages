@@ -25,7 +25,7 @@ jobs:
       run: |
         NIXPKGS=$(nix-instantiate --eval -E '<nixpkgs>')
         cp -r $NIXPKGS/maintainers .
-        chmod -R +w .
+        chmod -R +w maintainers
         sed -i "s|./../../default.nix|$NIXPKGS|g" maintainers/scripts/update.nix
     - name: Update flake packages
       id: update
