@@ -21,20 +21,14 @@ jobs:
         extra_nix_config: |
           experimental-features = nix-command flakes
           access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-    - name: Copy nixpkgs scripts
-      run: |
-        NIXPKGS=$(nix-instantiate --eval -E '<nixpkgs>')
-        cp -r $NIXPKGS/maintainers .
-        chmod -R +w maintainers
-        sed -i "s|./../../default.nix|$NIXPKGS|g" maintainers/scripts/update.nix
-    - name: Update flake packages
+    - name: Update packages
+      run: nix-shell helpers/update.nix
+    - name: Create PR
       id: update
-      uses: gepbird/nix-update-action@v3
+      uses: peter-evans/create-pull-request@v8.1.1
       with:
         token: ${{ secrets.NIX_UPDATE_PR_TOKEN }}
-        blacklist: "dectalk,pico-fido"
-        pr-body: |
-          Automated changes by the [nix-update-actions](https://github.com/gepbird/nix-update-action) GitHub Action.
-        pr-labels: "automated"
-    - name: Print PR number
-      run: echo Pull request number is ${{ steps.update.outputs.pull-request-number }}.
+        branch: chore/nix_update_actions
+        delete-branch: true
+        title: "Packages: update"
+        labels: "automated"
