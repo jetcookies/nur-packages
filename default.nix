@@ -20,7 +20,6 @@
   v2dat = pkgs.callPackage ./pkgs/v2dat { };
   picoforge = pkgs.callPackage ./pkgs/picoforge { };
   typewords = pkgs.callPackage ./pkgs/typewords { };
-  libtinycbor = pkgs.callPackage ./pkgs/libtinycbor { };
   virtualgamepad-pc = pkgs.libsForQt5.callPackage ./pkgs/virtualgamepad-pc { };
   kwm = pkgs.callPackage ./pkgs/kwm { };
   canoe = pkgs.callPackage ./pkgs/canoe { };
